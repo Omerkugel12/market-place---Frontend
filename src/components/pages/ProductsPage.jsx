@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 
 const PRODUCTS_URL = "http://localhost:3000/api/product";
 
 function ProductsPage() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useOutletContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getProducts() {
@@ -23,9 +25,16 @@ function ProductsPage() {
       <h1>Products</h1>
       <ul>
         {products.map((product) => {
-          return <li key={product._id}>{product.name}</li>;
+          return (
+            <Link key={product._id} to={product._id}>
+              <li>{product.name}</li>
+            </Link>
+          );
         })}
       </ul>
+      <button onClick={() => navigate("create", { replace: true })}>
+        Add product
+      </button>
     </div>
   );
 }
