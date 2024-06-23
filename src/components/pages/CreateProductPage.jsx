@@ -1,14 +1,58 @@
-import React from "react";
+import axios from "axios";
+import React, { useRef, useState } from "react";
+import { useOutletContext } from "react-router";
+
+const PRODUCTS_URL = "http://localhost:3000/api/product";
 
 function CreateProductPage() {
+  const [products, setProducts] = useOutletContext();
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const newProductNameInputRef = useRef(null);
+  const newProductPriceInputRef = useRef(null);
+
+  function handleCategoryChange(ev) {
+    setSelectedCategory(ev.target.value);
+  }
+
+  async function addProduct(ev) {
+    ev.preventDefault();
+    const newProduct = {
+      name: newProductNameInputRef.current.value,
+      price: newProductPriceInputRef.current.value,
+      category: selectedCategory,
+    };
+    try {
+      const { data: newProductPosted } = await axios.post(
+        PRODUCTS_URL,
+        newProduct
+      );
+      console.log("product added successfuly");
+      setProducts((prevProducts) => {
+        return [...prevProducts, newProductPosted];
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
       <h1>Add Product</h1>
-      <form action="submit">
-        <input type="text" placeholder="Enter product name..." />
-        <input type="text" placeholder="Enter product price..." />
-        <select name="" id="">
-          <option>Select category</option>
+      <form onSubmit={addProduct}>
+        <input
+          type="text"
+          ref={newProductNameInputRef}
+          placeholder="Enter product name..."
+          required
+        />
+        <input
+          type="number"
+          ref={newProductPriceInputRef}
+          placeholder="Enter product price..."
+          required
+        />
+        <select value={selectedCategory} onChange={handleCategoryChange}>
+          <option value="none">Select category</option>
           <option value="weapons">weapons</option>
           <option value="furniture">furniture</option>
           <option value="electronics">electronics</option>
