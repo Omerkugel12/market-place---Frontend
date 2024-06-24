@@ -12,6 +12,7 @@ function ProductDetailsPage() {
   const [isOpeningModal, setIsOpeningModal] = useState(null);
   const updatedProductNameInputRef = useRef(null);
   const updatedProductPriceInputRef = useRef(null);
+  const updatedProductQuantityInputRef = useRef(null);
   const [selectedCategory, setSelectedCategory] = useState("");
 
   function handleCategoryChange(e) {
@@ -28,7 +29,7 @@ function ProductDetailsPage() {
       }
     }
     getProduct();
-  }, [product]);
+  }, []);
 
   async function removeProduct(productId) {
     try {
@@ -48,6 +49,7 @@ function ProductDetailsPage() {
       _id: productId,
       name: updatedProductNameInputRef.current.value,
       price: updatedProductPriceInputRef.current.value,
+      quantity: updatedProductQuantityInputRef.current.value,
       category: selectedCategory,
     };
     try {
@@ -89,15 +91,25 @@ function ProductDetailsPage() {
               placeholder="Enter product price..."
               required
             />
+            <input
+              type="number"
+              ref={updatedProductQuantityInputRef}
+              placeholder="Enter product quantity..."
+              required
+            />
             <select
               value={selectedCategory}
               onChange={handleCategoryChange}
               required
             >
               <option value="none">Select category</option>
-              <option value="weapons">weapons</option>
-              <option value="furniture">furniture</option>
-              <option value="electronics">electronics</option>
+              <option value="Accessories">Accessories</option>
+              <option value="HomeAppliances">Home Appliances</option>
+              <option value="Electronics">Electronics</option>
+              <option value="SmartHome">Smart Home</option>
+              <option value="Automotive">Automotive</option>
+              <option value="Wearables">Wearables</option>
+              <option value="Health">Health</option>
             </select>
             <button>Edit</button>
           </form>

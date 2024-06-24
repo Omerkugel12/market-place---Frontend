@@ -73,6 +73,7 @@ function CreateProductPage() {
           <option value="SmartHome">Smart Home</option>
           <option value="Automotive">Automotive</option>
           <option value="Wearables">Wearables</option>
+          <option value="Health">Health</option>
         </select>
         <button>Add product</button>
       </form>
