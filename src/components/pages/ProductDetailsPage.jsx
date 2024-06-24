@@ -37,7 +37,7 @@ function ProductDetailsPage() {
         return prevProducts.filter((product) => product._id !== productId);
       });
       console.log("deleting");
-      navigate("/products", { replace: true });
+      navigate("/products");
     } catch (error) {
       console.log(error);
     }
