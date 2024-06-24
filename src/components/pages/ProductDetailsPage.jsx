@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router";
 
 const PRODUCTS_URL = "http://localhost:3000/api/product";
@@ -9,6 +9,14 @@ function ProductDetailsPage() {
   const { productId } = useParams();
   const [products, setProducts] = useOutletContext();
   const navigate = useNavigate();
+  const [isOpeningModal, setIsOpeningModal] = useState(null);
+  const updatedProductNameInputRef = useRef(null);
+  const updatedProductPriceInputRef = useRef(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  function handleCategoryChange(e) {
+    setSelectedCategory(e.target.value);
+  }
 
   useEffect(() => {
     async function getProduct() {
@@ -20,7 +28,7 @@ function ProductDetailsPage() {
       }
     }
     getProduct();
-  }, []);
+  }, [product]);
 
   async function removeProduct(productId) {
     try {
@@ -35,6 +43,28 @@ function ProductDetailsPage() {
     }
   }
 
+  async function editProduct(productId) {
+    const updatedProduct = {
+      _id: productId,
+      name: updatedProductNameInputRef.current.value,
+      price: updatedProductPriceInputRef.current.value,
+      category: selectedCategory,
+    };
+    try {
+      const { data: updatedProductPutted } = await axios.put(
+        `${PRODUCTS_URL}/${productId}`,
+        updatedProduct
+      );
+      setProduct(updatedProductPutted);
+      setProducts((prevProducts) => {
+        return prevProducts.map((product) =>
+          product._id === productId ? updatedProductPutted : product
+        );
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   return (
     <>
       <h1>Product details: {product.name}</h1>
@@ -43,7 +73,35 @@ function ProductDetailsPage() {
         <p>{product.price} $</p>
         <p>{product.category}</p>
         <button onClick={() => removeProduct(product._id)}>Delete</button>
-        <button>Edit</button>
+        <button onClick={() => setIsOpeningModal(true)}>Edit</button>
+        {isOpeningModal ? (
+          <form onSubmit={() => editProduct(product._id)}>
+            <button onClick={() => setIsOpeningModal(false)}>x</button>
+            <input
+              type="text"
+              ref={updatedProductNameInputRef}
+              placeholder="Enter product name..."
+              required
+            />
+            <input
+              type="number"
+              ref={updatedProductPriceInputRef}
+              placeholder="Enter product price..."
+              required
+            />
+            <select
+              value={selectedCategory}
+              onChange={handleCategoryChange}
+              required
+            >
+              <option value="none">Select category</option>
+              <option value="weapons">weapons</option>
+              <option value="furniture">furniture</option>
+              <option value="electronics">electronics</option>
+            </select>
+            <button>Edit</button>
+          </form>
+        ) : null}
       </div>
     </>
   );

@@ -51,7 +51,11 @@ function CreateProductPage() {
           placeholder="Enter product price..."
           required
         />
-        <select value={selectedCategory} onChange={handleCategoryChange}>
+        <select
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+          required
+        >
           <option value="none">Select category</option>
           <option value="weapons">weapons</option>
           <option value="furniture">furniture</option>
