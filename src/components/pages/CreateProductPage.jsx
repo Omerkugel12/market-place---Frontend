@@ -9,6 +9,7 @@ function CreateProductPage() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const newProductNameInputRef = useRef(null);
   const newProductPriceInputRef = useRef(null);
+  const newProductQuantityInputRef = useRef(null);
   const navigate = useNavigate();
 
   function handleCategoryChange(ev) {
@@ -20,6 +21,7 @@ function CreateProductPage() {
     const newProduct = {
       name: newProductNameInputRef.current.value,
       price: newProductPriceInputRef.current.value,
+      quantity: newProductQuantityInputRef.current.value,
       category: selectedCategory,
     };
     try {
@@ -53,15 +55,24 @@ function CreateProductPage() {
           placeholder="Enter product price..."
           required
         />
+        <input
+          type="number"
+          ref={newProductQuantityInputRef}
+          placeholder="Enter product uantity..."
+          required
+        />
         <select
           value={selectedCategory}
           onChange={handleCategoryChange}
           required
         >
           <option value="none">Select category</option>
-          <option value="weapons">weapons</option>
-          <option value="furniture">furniture</option>
-          <option value="electronics">electronics</option>
+          <option value="Accessories">Accessories</option>
+          <option value="HomeAppliances">Home Appliances</option>
+          <option value="Electronics">Electronics</option>
+          <option value="SmartHome">Smart Home</option>
+          <option value="Automotive">Automotive</option>
+          <option value="Wearables">Wearables</option>
         </select>
         <button>Add product</button>
       </form>
