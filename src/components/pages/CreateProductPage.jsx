@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
-import { useOutletContext } from "react-router";
+import { useNavigate, useOutletContext } from "react-router";
 
 const PRODUCTS_URL = "http://localhost:3000/api/product";
 
@@ -9,6 +9,7 @@ function CreateProductPage() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const newProductNameInputRef = useRef(null);
   const newProductPriceInputRef = useRef(null);
+  const navigate = useNavigate();
 
   function handleCategoryChange(ev) {
     setSelectedCategory(ev.target.value);
@@ -30,6 +31,7 @@ function CreateProductPage() {
       setProducts((prevProducts) => {
         return [...prevProducts, newProductPosted];
       });
+      // navigate("/products");
     } catch (error) {
       console.log(error);
     }

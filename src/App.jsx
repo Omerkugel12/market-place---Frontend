@@ -12,9 +12,8 @@ function App() {
     const { href, children } = props;
     return (
       <NavLink
-        className="nav-item"
         style={({ isActive }) => {
-          return isActive ? { color: "#fff" } : {};
+          return isActive ? { color: "#fff", textDecoration: "underline" } : {};
         }}
         to={href}
       >
