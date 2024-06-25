@@ -21,6 +21,8 @@ function ProductsPage() {
         params: {
           name: searchParams.get("name"),
           category: searchParams.get("category"),
+          minPrice: searchParams.get("minPrice"),
+          maxPrice: searchParams.get("maxPrice"),
         },
       };
       try {
@@ -32,10 +34,6 @@ function ProductsPage() {
     }
     getProducts();
   }, [searchParams]);
-
-  // const handleSearchChange = (e) => {
-  //   setSearchParams({ name: e.target.value }, { replace: true });
-  // };
 
   function handleFilterChange(ev) {
     const inputName = ev.target.name;
@@ -57,16 +55,26 @@ function ProductsPage() {
           placeholder="Enter product name..."
         />
       </div>
-      {/* <div>
-        <h3>search by category</h3>
+      <div>
+        <h3>Minimum price</h3>
         <input
-          type="text"
-          name="category"
-          value={searchParams.get("category" || "")}
+          type="number"
+          name="minPrice"
+          value={searchParams.get("minPrice") || 0}
           onChange={handleFilterChange}
-          placeholder="Enter product category..."
+          placeholder="Enter product minimum price..."
         />
-      </div> */}
+      </div>
+      <div>
+        <h3>Maximum price</h3>
+        <input
+          type="number"
+          name="maxPrice"
+          value={searchParams.get("MaxPrice") || 5000}
+          onChange={handleFilterChange}
+          placeholder="Enter product maximum price..."
+        />
+      </div>
       <select
         name="category"
         value={searchParams.get("category") || ""}
