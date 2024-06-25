@@ -20,6 +20,7 @@ function ProductsPage() {
       const options = {
         params: {
           name: searchParams.get("name"),
+          category: searchParams.get("category"),
         },
       };
       try {
@@ -51,11 +52,36 @@ function ProductsPage() {
         <input
           type="text"
           name="name"
-          value={searchParams.get("name" || "")}
+          value={searchParams.get("name") || ""}
           onChange={handleFilterChange}
           placeholder="Enter product name..."
         />
       </div>
+      {/* <div>
+        <h3>search by category</h3>
+        <input
+          type="text"
+          name="category"
+          value={searchParams.get("category" || "")}
+          onChange={handleFilterChange}
+          placeholder="Enter product category..."
+        />
+      </div> */}
+      <select
+        name="category"
+        value={searchParams.get("category") || ""}
+        onChange={handleFilterChange}
+        required
+      >
+        <option value="">Select category</option>
+        <option value="Accessories">Accessories</option>
+        <option value="Home appliances">Home Appliances</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Smart Home">Smart Home</option>
+        <option value="Automotive">Automotive</option>
+        <option value="Wearables">Wearables</option>
+        <option value="Health">Health</option>
+      </select>
       <ul className="flex flex-wrap gap-10 ">
         {products.map((product) => {
           return (
