@@ -60,7 +60,7 @@ function ProductsPage() {
         <input
           type="number"
           name="minPrice"
-          value={searchParams.get("minPrice") || ""}
+          value={searchParams.get("minPrice")}
           onChange={handleFilterChange}
           placeholder="Enter product minimum price..."
         />
@@ -70,7 +70,7 @@ function ProductsPage() {
         <input
           type="number"
           name="maxPrice"
-          value={searchParams.get("maxPrice") || 1500}
+          value={searchParams.get("maxPrice")}
           onChange={handleFilterChange}
           placeholder="Enter product maximum price..."
         />
