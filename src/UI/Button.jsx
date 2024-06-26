@@ -1,7 +1,7 @@
 import React from "react";
 import { cn } from "../utils/utils";
 import PropTypes from "prop-types";
-function Button({ children, className, view, shop, onClick }) {
+function Button({ children, className, view, shop, onClick, danger }) {
   return (
     <button
       className={cn(
@@ -10,7 +10,8 @@ function Button({ children, className, view, shop, onClick }) {
         view &&
           "mt-4 inline-block px-4 py-2 rounded hover:bg-indigo-600 transition duration-300",
         shop &&
-          "  px-6 py-3 rounded-full font-semibold transition duration-300 hover:bg-indigo-700"
+          "  px-6 py-3 rounded-full font-semibold transition duration-300 hover:bg-indigo-700",
+        danger && "bg-inherit"
       )}
       onClick={onClick}
     >
