@@ -1,5 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import H from "../../UI/H";
+import Input from "../../UI/Input";
+import Button from "../../UI/Button";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -12,30 +15,43 @@ function LoginPage() {
   }
   return (
     <>
-      <h1>Login</h1>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="">Username</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="border border-neutral-950"
-            placeholder="Enter Username..."
-          />
-        </div>
-        <div>
-          <label htmlFor="">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="border border-neutral-950"
-            placeholder="Enter Password..."
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
+      <div className="flex justify-center items-center p-6">
+        <form
+          onSubmit={handleLogin}
+          className="w-[30%] shadow-2xl mt-24 p-12 flex flex-col space-y-6 items-center rounded-3xl border border-indigo-400"
+        >
+          <H three>Login</H>
+          <div>
+            <H register htmlFor="">
+              Username
+            </H>
+            <Input
+              register
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="border border-neutral-950"
+              placeholder="Enter Username..."
+            />
+          </div>
+          <div>
+            <H register htmlFor="">
+              Password
+            </H>
+            <Input
+              register
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="border border-neutral-950"
+              placeholder="Enter Password..."
+            />
+          </div>
+          <Button shop type="submit">
+            Login
+          </Button>
+        </form>
+      </div>
     </>
   );
 }
