@@ -25,7 +25,7 @@ function App() {
   }
   return (
     <>
-      <nav className="bg-slate-400 flex justify-between px-10 py-4">
+      <nav className="bg-slate-400 flex justify-between px-10 py-4 sticky top-0">
         <h1 className="font-bold font">OK-Market</h1>
         <ul className="flex gap-7">
           <li>

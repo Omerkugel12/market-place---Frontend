@@ -7,11 +7,14 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { PRODUCT_BASE_URL } from "../../constansts/url.constant.js";
+import Button from "../../UI/Button.jsx";
+import H from "../../UI/H.jsx";
 
 function ProductsPage() {
   const [products, setProducts] = useOutletContext();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [isOpeningFilter, setIsOpeningFilter] = useState(false);
 
   useEffect(() => {
     async function getProducts() {
@@ -42,57 +45,64 @@ function ProductsPage() {
 
   return (
     <div className="px-5 pt-4">
-      <h1 className="text-indigo-700 font-bold text-3xl ">Products</h1>
-      <div>
-        <h3>search by name</h3>
-        <input
-          type="text"
-          name="name"
-          value={searchParams.get("name") || ""}
-          onChange={handleFilterChange}
-          placeholder="Enter product name..."
-        />
-      </div>
-      <div>
-        <h3>Minimum price</h3>
-        <input
-          type="number"
-          name="minPrice"
-          value={searchParams.get("minPrice") || ""}
-          onChange={handleFilterChange}
-          placeholder="Enter product minimum price..."
-        />
-      </div>
-      <div>
-        <h3>Maximum price</h3>
-        <input
-          type="number"
-          name="maxPrice"
-          value={searchParams.get("maxPrice") || ""}
-          onChange={handleFilterChange}
-          placeholder="Enter product maximum price..."
-        />
-      </div>
-      <select
-        name="category"
-        value={searchParams.get("category") || ""}
-        onChange={handleFilterChange}
-        required
-      >
-        <option value="">Select category</option>
-        <option value="Accessories">Accessories</option>
-        <option value="Home appliances">Home Appliances</option>
-        <option value="Electronics">Electronics</option>
-        <option value="Smart Home">Smart Home</option>
-        <option value="Automotive">Automotive</option>
-        <option value="Wearables">Wearables</option>
-        <option value="Health">Health</option>
-      </select>
+      <H one>Products</H>
+      <Button view onClick={() => setIsOpeningFilter(!isOpeningFilter)}>
+        Filters
+      </Button>
+      {isOpeningFilter && (
+        <form>
+          <div>
+            <h3>search by name</h3>
+            <input
+              type="text"
+              name="name"
+              value={searchParams.get("name") || ""}
+              onChange={handleFilterChange}
+              placeholder="Enter product name..."
+            />
+          </div>
+          <div>
+            <h3>Minimum price</h3>
+            <input
+              type="number"
+              name="minPrice"
+              value={searchParams.get("minPrice") || ""}
+              onChange={handleFilterChange}
+              placeholder="Enter product minimum price..."
+            />
+          </div>
+          <div>
+            <h3>Maximum price</h3>
+            <input
+              type="number"
+              name="maxPrice"
+              value={searchParams.get("maxPrice") || ""}
+              onChange={handleFilterChange}
+              placeholder="Enter product maximum price..."
+            />
+          </div>
+          <select
+            name="category"
+            value={searchParams.get("category") || ""}
+            onChange={handleFilterChange}
+            required
+          >
+            <option value="">Select category</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Home appliances">Home Appliances</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Smart Home">Smart Home</option>
+            <option value="Automotive">Automotive</option>
+            <option value="Wearables">Wearables</option>
+            <option value="Health">Health</option>
+          </select>
+        </form>
+      )}
       <ul className="flex flex-wrap gap-10 ">
         {products.map((product) => {
           return (
             <li
-              key={product.id}
+              key={product._id}
               className="bg-white rounded-lg overflow-hidden shadow-md w-80"
             >
               <img
@@ -107,11 +117,10 @@ function ProductsPage() {
                   Category: <span className="">{product.category}</span>
                 </p>
                 <p className="text-gray-600">In Stock: {product.quantity}</p>
-                <Link to={`/products/${product.id}`}>
-                  <button className="mt-4 inline-block bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600 transition duration-300">
-                    View Product
-                  </button>
-                </Link>
+
+                <Button view>
+                  <Link to={`/products/${product._id}`}>View Product</Link>
+                </Button>
               </div>
             </li>
           );
