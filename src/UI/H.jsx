@@ -1,7 +1,7 @@
 import React from "react";
 import { cn } from "../utils/utils";
 
-function H({ children, className, one, two, three, four, five }) {
+function H({ children, className, one, two, three, four, five, register }) {
   return (
     <h1
       className={cn(
@@ -11,7 +11,8 @@ function H({ children, className, one, two, three, four, five }) {
         two && "text-5xl",
         three && "text-4xl",
         four && "text-3xl",
-        five && "text-2xl"
+        five && "text-2xl",
+        register && "mb-0 text-left"
       )}
     >
       {children}

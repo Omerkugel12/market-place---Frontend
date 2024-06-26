@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import H from "../../UI/H";
+import Input from "../../UI/Input";
+import Button from "../../UI/Button";
 
 function RegisterPage() {
   const [username, setUsername] = useState("");
@@ -13,12 +16,16 @@ function RegisterPage() {
     );
   }
   return (
-    <>
-      <form onSubmit={handleRegistration}>
-        <h1>Register to our Market-Shop</h1>
+    <div className="flex justify-center items-center p-6">
+      <form
+        onSubmit={handleRegistration}
+        className="w-[30%] shadow-2xl mt-24 p-12 flex flex-col space-y-6 items-center rounded-3xl border border-indigo-400"
+      >
+        <H three>Register to our Market-Shop</H>
         <div>
-          <label htmlFor="">Username</label>
-          <input
+          <H register>Username</H>
+          <Input
+            register
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -27,8 +34,9 @@ function RegisterPage() {
           />
         </div>
         <div>
-          <label htmlFor="">Password</label>
-          <input
+          <H register>Password</H>
+          <Input
+            register
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -37,8 +45,9 @@ function RegisterPage() {
           />
         </div>
         <div>
-          <label htmlFor="">First Name</label>
-          <input
+          <H register>First Name</H>
+          <Input
+            register
             type="text"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
@@ -47,18 +56,21 @@ function RegisterPage() {
           />
         </div>
         <div>
-          <label htmlFor="">Last Name</label>
-          <input
+          <H register>Last Name</H>
+          <Input
+            register
             type="text"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
-            className="border border-neutral-950"
+            className=""
             placeholder="Enter Last Name..."
           />
         </div>
-        <button type="submit">Register</button>
+        <Button shop type="submit">
+          Register
+        </Button>
       </form>
-    </>
+    </div>
   );
 }
 

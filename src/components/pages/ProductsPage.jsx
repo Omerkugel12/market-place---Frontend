@@ -45,6 +45,7 @@ function ProductsPage() {
   }
 
   function handleFilterChange(ev) {
+    ev.preventDefault();
     const inputName = ev.target.name;
     const value = ev.target.value;
     searchParams.set(inputName, value);
@@ -143,19 +144,17 @@ function ProductsPage() {
           Add product <Plus size={20} color="#fff" strokeWidth={1.5} />
         </Button>
         <div className="flex items-center my-6">
-          <form className="flex items-center max-w-md mx-auto">
-            <Input
-              type="text"
-              name="name"
-              value={searchParams.get("name") || ""}
-              onChange={handleFilterChange}
-              placeholder="Enter product name..."
-              search
-            />
-            <Button className="px-6 py-3 rounded-r-full font-semibold transition duration-300 hover:bg-indigo-700">
-              <Search size={26} color="#fff" strokeWidth={1.5} />
-            </Button>
-          </form>
+          <Input
+            type="text"
+            name="name"
+            value={searchParams.get("name") || ""}
+            onChange={handleFilterChange}
+            placeholder="Enter product name..."
+            search
+          />
+          <Button className="px-6 py-3 rounded-r-full font-semibold transition duration-300 hover:bg-indigo-700">
+            <Search size={26} color="#fff" strokeWidth={1.5} />
+          </Button>
         </div>
 
         <ul className="flex flex-wrap gap-10 justify-center ">
