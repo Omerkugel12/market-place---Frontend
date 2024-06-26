@@ -9,7 +9,7 @@ import {
 import { PRODUCT_BASE_URL } from "../../constansts/url.constant.js";
 import Button from "../../UI/Button.jsx";
 import H from "../../UI/H.jsx";
-import { Search, X } from "lucide-react";
+import { Eye, Filter, Plus, Search, X } from "lucide-react";
 import Input from "../../UI/Input.jsx";
 
 function ProductsPage() {
@@ -52,21 +52,21 @@ function ProductsPage() {
   }
 
   return (
-    <div className="relative px-5 pt-4 flex flex-col items-center">
+    <div className="relative px-5 pt-4 pb-6 flex flex-col items-center">
       <H one>Products</H>
       <Button
-        className="absolute left-6"
         view
-        onClick={() => setIsOpeningFilter(true)}
+        className="flex flex-row items-center justify-center gap-2 absolute left-6"
       >
         Filters
+        <Filter size={20} color="#fff" strokeWidth={1.5} />
       </Button>
       <Button
         view
-        className="absolute right-6"
+        className="absolute right-6 flex items-center justify-center gap-2"
         onClick={() => navigate("create", { replace: true })}
       >
-        Add product
+        Add product <Plus size={20} color="#fff" strokeWidth={1.5} />
       </Button>
       <div className="flex items-center my-6">
         <form className="flex items-center max-w-md mx-auto">
@@ -132,7 +132,10 @@ function ProductsPage() {
             <option value="Wearables">Wearables</option>
             <option value="Health">Health</option>
           </select>
-          <Button>Filter</Button>
+          <Button className="flex items-center justify-center gap-2">
+            Apply filters
+            <Filter size={15} color="#fff" strokeWidth={1.5} />
+          </Button>
         </form>
       )}
       <ul className="flex flex-wrap gap-10 justify-center ">
@@ -157,8 +160,14 @@ function ProductsPage() {
                 </p>
                 <p className="text-gray-600">In Stock: {product.quantity}</p>
 
-                <Button view>
-                  <Link to={`/products/${product._id}`}>View Product</Link>
+                <Button view className="flex items-center justify-center gap-2">
+                  <Link
+                    to={`/products/${product._id}`}
+                    className="flex items-center justify-center gap-2"
+                  >
+                    View Product{" "}
+                    <Eye size={20} color="#fff" strokeWidth={1.5} />
+                  </Link>
                 </Button>
               </div>
             </li>
