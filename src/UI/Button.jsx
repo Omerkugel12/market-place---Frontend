@@ -5,7 +5,7 @@ function Button({ children, className, view, shop, onClick }) {
   return (
     <button
       className={cn(
-        "bg-indigo-500 text-white",
+        "bg-indigo-500 text-white px-4 py-2",
         className,
         view &&
           "mt-4 inline-block px-4 py-2 rounded hover:bg-indigo-600 transition duration-300",

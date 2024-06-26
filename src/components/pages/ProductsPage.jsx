@@ -36,6 +36,12 @@ function ProductsPage() {
     getProducts();
   }, [searchParams]);
 
+  function handleFilterSubmit(event) {
+    event.preventDefault();
+    setSearchParams(searchParams);
+    setIsOpeningFilter(false);
+  }
+
   function handleFilterChange(ev) {
     const inputName = ev.target.name;
     const value = ev.target.value;
@@ -44,13 +50,27 @@ function ProductsPage() {
   }
 
   return (
-    <div className="px-5 pt-4">
+    <div className="relative px-5 pt-4 flex flex-col items-center">
       <H one>Products</H>
-      <Button view onClick={() => setIsOpeningFilter(!isOpeningFilter)}>
+      <Button
+        className="absolute left-6"
+        view
+        onClick={() => setIsOpeningFilter(true)}
+      >
         Filters
       </Button>
       {isOpeningFilter && (
-        <form>
+        <form
+          onSubmit={handleFilterSubmit}
+          className="fixed bg-slate-700 p-6 space-y-6 rounded-md"
+        >
+          <Button
+            onClick={() => {
+              setIsOpeningFilter(false);
+            }}
+          >
+            x
+          </Button>
           <div>
             <h3>search by name</h3>
             <input
@@ -58,6 +78,7 @@ function ProductsPage() {
               name="name"
               value={searchParams.get("name") || ""}
               onChange={handleFilterChange}
+              // onSubmit={handleFilterChange}
               placeholder="Enter product name..."
             />
           </div>
@@ -68,6 +89,7 @@ function ProductsPage() {
               name="minPrice"
               value={searchParams.get("minPrice") || ""}
               onChange={handleFilterChange}
+              // onSubmit={handleFilterChange}
               placeholder="Enter product minimum price..."
             />
           </div>
@@ -78,6 +100,7 @@ function ProductsPage() {
               name="maxPrice"
               value={searchParams.get("maxPrice") || ""}
               onChange={handleFilterChange}
+              // onSubmit={handleFilterChange}
               placeholder="Enter product maximum price..."
             />
           </div>
@@ -85,7 +108,7 @@ function ProductsPage() {
             name="category"
             value={searchParams.get("category") || ""}
             onChange={handleFilterChange}
-            required
+            // onSubmit={handleFilterChange}
           >
             <option value="">Select category</option>
             <option value="Accessories">Accessories</option>
@@ -96,6 +119,7 @@ function ProductsPage() {
             <option value="Wearables">Wearables</option>
             <option value="Health">Health</option>
           </select>
+          <Button>Filter</Button>
         </form>
       )}
       <ul className="flex flex-wrap gap-10 ">
