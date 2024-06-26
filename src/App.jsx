@@ -34,6 +34,12 @@ function App() {
           <li>
             <TopNavBar href={"/products"}>Products</TopNavBar>
           </li>
+          <li>
+            <TopNavBar href={"/register"}>Register</TopNavBar>
+          </li>
+          <li>
+            <TopNavBar href={"/login"}>Login</TopNavBar>
+          </li>
         </ul>
       </nav>
       <Routes>
