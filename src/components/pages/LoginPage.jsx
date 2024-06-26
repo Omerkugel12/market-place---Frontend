@@ -3,6 +3,7 @@ import { useState } from "react";
 import H from "../../UI/H";
 import Input from "../../UI/Input";
 import Button from "../../UI/Button";
+import { LogIn } from "lucide-react";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
@@ -47,8 +48,8 @@ function LoginPage() {
               placeholder="Enter Password..."
             />
           </div>
-          <Button shop type="submit">
-            Login
+          <Button shop type="submit" className="flex gap-1 items-center">
+            Login <LogIn size={20} color="#ffffff" strokeWidth={1.5} />
           </Button>
         </form>
       </div>
