@@ -1,9 +1,7 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router";
-
-const PRODUCTS_URL = "http://localhost:3000/api/product";
-
+import { PRODUCT_BASE_URL } from "../../constansts/url.constant";
 function CreateProductPage() {
   const [products, setProducts] = useOutletContext();
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -26,14 +24,14 @@ function CreateProductPage() {
     };
     try {
       const { data: newProductPosted } = await axios.post(
-        PRODUCTS_URL,
+        PRODUCT_BASE_URL,
         newProduct
       );
       console.log("product added successfuly");
       setProducts((prevProducts) => {
         return [...prevProducts, newProductPosted];
       });
-      // navigate("/products");
+      navigate("/products");
     } catch (error) {
       console.log(error);
     }

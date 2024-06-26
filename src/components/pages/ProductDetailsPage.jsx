@@ -1,11 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router";
-
-const PRODUCTS_URL = "http://localhost:3000/api/product";
+import { PRODUCT_BASE_URL } from "../../constansts/url.constant";
 
 function ProductDetailsPage() {
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState(null);
   const { productId } = useParams();
   const [products, setProducts] = useOutletContext();
   const navigate = useNavigate();
@@ -22,7 +21,7 @@ function ProductDetailsPage() {
   useEffect(() => {
     async function getProduct() {
       try {
-        const { data } = await axios.get(`${PRODUCTS_URL}/${productId}`);
+        const { data } = await axios.get(`${PRODUCT_BASE_URL}/${productId}`);
         setProduct(data);
       } catch (error) {
         console.log(error);
@@ -33,7 +32,7 @@ function ProductDetailsPage() {
 
   async function removeProduct(productId) {
     try {
-      await axios.delete(`${PRODUCTS_URL}/${productId}`);
+      await axios.delete(`${PRODUCT_BASE_URL}/${productId}`);
       setProducts((prevProducts) => {
         return prevProducts.filter((product) => product._id !== productId);
       });
@@ -42,6 +41,10 @@ function ProductDetailsPage() {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  if (!product) {
+    return;
   }
 
   async function editProduct(productId) {
@@ -54,7 +57,7 @@ function ProductDetailsPage() {
     };
     try {
       const { data: updatedProductPutted } = await axios.put(
-        `${PRODUCTS_URL}/${productId}`,
+        `${PRODUCT_BASE_URL}/${productId}`,
         updatedProduct
       );
       setProduct(updatedProductPutted);

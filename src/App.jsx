@@ -6,6 +6,8 @@ import ProductDetails from "./components/pages/ProductDetailsPage";
 import CreateProductPage from "./components/pages/CreateProductPage";
 import NotFoundPage from "./components/pages/NotFoundPage";
 import Layout from "./components/pages/Layout";
+import RegisterPage from "./components/pages/RegisterPage";
+import LoginPage from "./components/pages/LoginPage";
 
 function App() {
   function TopNavBar(props) {
@@ -41,6 +43,8 @@ function App() {
           <Route path=":productId" element={<ProductDetails />} />
           <Route path="create" element={<CreateProductPage />} />
         </Route>
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </>
