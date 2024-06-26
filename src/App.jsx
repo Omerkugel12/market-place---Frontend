@@ -18,6 +18,7 @@ function App() {
           return isActive ? { color: "#fff", textDecoration: "underline" } : {};
         }}
         to={href}
+        className="text-xl  hover:text-2xl transition-all"
       >
         {children}
       </NavLink>
@@ -26,7 +27,7 @@ function App() {
   return (
     <>
       <nav className="bg-slate-400 flex justify-between px-10 py-4 sticky top-0 z-10">
-        <h1 className="font-bold font">OK-Market</h1>
+        <h1 className="font-bold text-3xl">OK-Market</h1>
         <ul className="flex gap-7">
           <li>
             <TopNavBar href={"/"}>Home</TopNavBar>

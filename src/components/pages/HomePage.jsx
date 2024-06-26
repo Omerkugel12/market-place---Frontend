@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Button from "../../UI/Button";
 import H from "../../UI/H";
+import { CalendarCheck, Eye, Store } from "lucide-react";
 
 const HomePage = () => {
   const products = [
@@ -39,7 +40,12 @@ const HomePage = () => {
             Explore our curated collection of products.
           </p>
           <Button shop>
-            <Link to="/products">Shop Now</Link>
+            <Link
+              to="/products"
+              className="flex gap-1 items-center justify-center"
+            >
+              Shop Now <Store size={20} color="#ffffff" strokeWidth={1.5} />
+            </Link>
           </Button>
         </div>
       </section>
@@ -64,7 +70,13 @@ const HomePage = () => {
                 <p className="text-gray-600">Category: {product.category}</p>
                 <p className="text-gray-600">In Stock: {product.quantity}</p>
                 <Link to={`/products/${product.id}`}>
-                  <Button view>View Product</Button>
+                  <Button
+                    view
+                    className="flex gap-1 items-center justify-center"
+                  >
+                    View Product{" "}
+                    <Eye size={20} color="#ffffff" strokeWidth={1.5} />
+                  </Button>
                 </Link>
               </div>
             </div>
@@ -84,8 +96,9 @@ const HomePage = () => {
               placeholder="Enter your email..."
               className="border border-gray-300 p-3 rounded-l-full w-full focus:outline-none"
             />
-            <Button className="  px-6 py-3 rounded-r-full font-semibold transition duration-300 hover:bg-indigo-700">
-              Subscribe
+            <Button className="px-6 py-3 rounded-r-full font-semibold transition duration-300 hover:bg-indigo-700 flex gap-1 items-center justify-center">
+              Subscribe{" "}
+              <CalendarCheck size={20} color="#ffffff" strokeWidth={1.5} />
             </Button>
           </form>
         </div>
