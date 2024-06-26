@@ -1,7 +1,15 @@
 import React from "react";
 import { cn } from "../utils/utils";
-import PropTypes from "prop-types";
-function Button({ children, className, view, shop, onClick, danger }) {
+function Button({
+  children,
+  className,
+  view,
+  shop,
+  onClick,
+  danger,
+  edit,
+  deleting,
+}) {
   return (
     <button
       className={cn(
@@ -11,7 +19,11 @@ function Button({ children, className, view, shop, onClick, danger }) {
           "mt-4  px-4 py-2 rounded hover:bg-indigo-600 transition duration-300",
         shop &&
           "  px-6 py-3 rounded-full font-semibold transition duration-300 hover:bg-indigo-700",
-        danger && "bg-inherit"
+        danger && "bg-inherit",
+        edit &&
+          "bg-blue-600 mt-4  px-4 py-2 rounded hover:bg-blue-800 transition duration-300",
+        deleting &&
+          "bg-red-500 mt-4 px-4 py-2 rounded hover:bg-blue-800 transition duration-300"
       )}
       onClick={onClick}
     >
@@ -19,19 +31,5 @@ function Button({ children, className, view, shop, onClick, danger }) {
     </button>
   );
 }
-
-Button.defaultProps = {
-  view: false,
-  shop: false,
-  onClick: null,
-};
-
-Button.propTypes = {
-  children: PropTypes.node.isRequired,
-  className: PropTypes.string,
-  view: PropTypes.bool,
-  shop: PropTypes.bool,
-  onClick: PropTypes.func,
-};
 
 export default Button;
