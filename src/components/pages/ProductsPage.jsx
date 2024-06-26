@@ -91,13 +91,29 @@ function ProductsPage() {
       <ul className="flex flex-wrap gap-10 ">
         {products.map((product) => {
           return (
-            <Link key={product._id} to={product._id}>
-              <li className=" w-80 p-10 shadow-2xl shadow-500-grey flex-col space-y-6 justify-">
-                <p>{product.name}</p>
-                <p>{product.price}$</p>
-                <p>{product.category}</p>
-              </li>
-            </Link>
+            <li
+              key={product.id}
+              className="bg-white rounded-lg overflow-hidden shadow-md w-80"
+            >
+              <img
+                src={"https://via.placeholder.com/300x200"}
+                alt={product.name}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-4">
+                <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
+                <p className="text-gray-700">${product.price}</p>
+                <p className="text-gray-600">
+                  Category: <span className="">{product.category}</span>
+                </p>
+                <p className="text-gray-600">In Stock: {product.quantity}</p>
+                <Link to={`/products/${product.id}`}>
+                  <button className="mt-4 inline-block bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600 transition duration-300">
+                    View Product
+                  </button>
+                </Link>
+              </div>
+            </li>
           );
         })}
       </ul>

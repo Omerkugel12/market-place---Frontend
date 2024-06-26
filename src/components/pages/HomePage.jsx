@@ -2,15 +2,41 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const HomePage = () => {
+  const products = [
+    {
+      id: "667be3e697f64fcd16ef3315",
+      name: "Wireless Headphones",
+      price: 99.99,
+      quantity: 150,
+      category: "Electronics",
+      image: "https://via.placeholder.com/300x200",
+    },
+    {
+      id: "667be3e697f64fcd16ef3316",
+      name: "Smartphone",
+      price: 599.99,
+      quantity: 75,
+      category: "Electronics",
+      image: "https://via.placeholder.com/300x200",
+    },
+    {
+      id: "667be3e697f64fcd16ef3317",
+      name: "Laptop",
+      price: 1299.99,
+      quantity: 50,
+      category: "Electronics",
+      image: "https://via.placeholder.com/300x200",
+    },
+  ];
   return (
     <div className="container mx-auto px-4 py-8">
       <section className="hero-section bg-gray-100 py-20">
         <div className="max-w-6xl mx-auto flex flex-col items-center justify-center text-center">
           <h1 className="text-5xl font-bold text-gray-900 mb-4">
-            Discover Your Style
+            Discover Our Amazing Market
           </h1>
           <p className="text-lg text-gray-700 mb-8">
-            Explore our curated collection of fashion and accessories.
+            Explore our curated collection of products.
           </p>
           <Link
             to="/products"
@@ -21,71 +47,33 @@ const HomePage = () => {
         </div>
       </section>
       <section className="featured-section py-16">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-            Featured Products
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white shadow-lg rounded-lg overflow-hidden">
+        <h1 className="text-3xl font-bold text-gray-900 mb-4 text-center">
+          Best Sellers
+        </h1>
+        <div className="flex w-[100%] justify-evenly flex-wrap sm:gap-8 sm">
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="bg-white rounded-lg overflow-hidden shadow-md"
+            >
               <img
-                src="/images/product1.jpg"
-                alt="Product 1"
-                className="w-full h-64 object-cover"
+                src={product.image}
+                alt={product.name}
+                className="w-full h-48 object-cover"
               />
               <div className="p-4">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  Elegant Dress
-                </h3>
-                <p className="text-gray-700 mb-2">$89.99</p>
-                <Link
-                  to="/products/1"
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-full inline-block hover:bg-indigo-700"
-                >
-                  View Details
+                <h2 className="text-lg font-semibold mb-2">{product.name}</h2>
+                <p className="text-gray-700">${product.price}</p>
+                <p className="text-gray-600">Category: {product.category}</p>
+                <p className="text-gray-600">In Stock: {product.quantity}</p>
+                <Link to={`/products/${product.id}`}>
+                  <button className="mt-4 inline-block bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600 transition duration-300">
+                    View Product
+                  </button>
                 </Link>
               </div>
             </div>
-
-            <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-              <img
-                src="/images/product2.jpg"
-                alt="Product 2"
-                className="w-full h-64 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  Stylish Sunglasses
-                </h3>
-                <p className="text-gray-700 mb-2">$49.99</p>
-                <Link
-                  to="/products/2"
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-full inline-block hover:bg-indigo-700"
-                >
-                  View Details
-                </Link>
-              </div>
-            </div>
-
-            <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-              <img
-                src="/images/product3.jpg"
-                alt="Product 3"
-                className="w-full h-64 object-cover"
-              />
-              <div className="p-4">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  Leather Handbag
-                </h3>
-                <p className="text-gray-700 mb-2">$129.99</p>
-                <Link
-                  to="/products/3"
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-full inline-block hover:bg-indigo-700"
-                >
-                  View Details
-                </Link>
-              </div>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
 
