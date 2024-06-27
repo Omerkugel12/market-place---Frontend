@@ -51,7 +51,7 @@ const HomePage = () => {
       </section>
       <section className="featured-section py-16">
         <H two>Best Sellers</H>
-        <div className="flex w-[100%] justify-evenly flex-wrap sm:gap-8">
+        <div className="flex w-[100%] justify-evenly flex-wrap md:gap-10">
           {products.map((product) => (
             <div
               key={product.id}

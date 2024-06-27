@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import H from "../../UI/H";
 import Input from "../../UI/Input";
 import Button from "../../UI/Button";
+import { Check } from "lucide-react";
 
 function RegisterPage() {
   const [username, setUsername] = useState("");
@@ -66,8 +67,12 @@ function RegisterPage() {
             placeholder="Enter Last Name..."
           />
         </div>
-        <Button shop type="submit">
-          Register
+        <Button
+          shop
+          type="submit"
+          className="flex justify-center items-center gap-2"
+        >
+          Register <Check size={20} color="#ffffff" strokeWidth={1.5} />
         </Button>
       </form>
     </div>

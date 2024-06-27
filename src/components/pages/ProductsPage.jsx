@@ -20,12 +20,17 @@ function ProductsPage() {
 
   useEffect(() => {
     async function getProducts() {
+      const page = searchParams.get("page");
+      if (page < 1) searchParams.set("page", 1);
+      setSearchParams(searchParams);
+
       const options = {
         params: {
           name: searchParams.get("name"),
           category: searchParams.get("category"),
           minPrice: searchParams.get("minPrice"),
           maxPrice: searchParams.get("maxPrice"),
+          page: page,
         },
       };
       try {
@@ -45,26 +50,17 @@ function ProductsPage() {
   }
 
   function handleFilterChange(ev) {
-    ev.preventDefault();
     const inputName = ev.target.name;
     const value = ev.target.value;
     searchParams.set(inputName, value);
+    searchParams.set("page", 1);
     setSearchParams(searchParams);
   }
 
-  function MainDiv(props) {
-    const { children } = props;
-    return (
-      <div
-        className={
-          isOpeningFilter
-            ? "opacity-25 relative px-5 pt-4 pb-6 flex flex-col items-center"
-            : "relative px-5 pt-4 pb-6 flex flex-col items-center"
-        }
-      >
-        {children}
-      </div>
-    );
+  function handlePagination(ev) {
+    const value = ev.target.value;
+    searchParams.set("page", value);
+    setSearchParams(searchParams);
   }
 
   return (
@@ -126,8 +122,11 @@ function ProductsPage() {
           </form>
         )}
       </div>
-      <MainDiv className="relative px-5 pt-4 pb-6 flex flex-col items-center">
+      <div
+        className={`${isOpeningFilter ? " opacity-10 " : ""} relative px-5 pt-4 pb-6 flex flex-col items-center`}
+      >
         <H one>Products</H>
+
         <Button
           view
           className="flex flex-row items-center justify-center gap-2 absolute left-6"
@@ -144,19 +143,31 @@ function ProductsPage() {
           Add product <Plus size={20} color="#fff" strokeWidth={1.5} />
         </Button>
         <div className="flex items-center my-6">
-          <Input
-            type="text"
-            name="name"
-            value={searchParams.get("name") || ""}
-            onChange={handleFilterChange}
-            placeholder="Enter product name..."
-            search
-          />
-          <Button className="px-6 py-3 rounded-r-full font-semibold transition duration-300 hover:bg-indigo-700">
-            <Search size={26} color="#fff" strokeWidth={1.5} />
-          </Button>
+          <form onSubmit={handleFilterSubmit} className="flex">
+            <Input
+              type="text"
+              name="name"
+              value={searchParams.get("name") || ""}
+              onChange={handleFilterChange}
+              placeholder="Enter product name..."
+              search
+            />
+            <Button className="px-6 py-3 rounded-r-full font-semibold transition duration-300 hover:bg-indigo-700">
+              <Search size={26} color="#fff" strokeWidth={1.5} />
+            </Button>
+          </form>
         </div>
-
+        <div className="my-4">
+          <Input
+            className="w-12 border-gray-300 p-3"
+            min={1}
+            id="page"
+            name="page"
+            type="number"
+            value={searchParams.get("page") || "1"}
+            onChange={handlePagination}
+          />
+        </div>
         <ul className="flex flex-wrap gap-10 justify-center ">
           {products.map((product) => {
             return (
@@ -196,7 +207,7 @@ function ProductsPage() {
             );
           })}
         </ul>
-      </MainDiv>
+      </div>
     </>
   );
 }

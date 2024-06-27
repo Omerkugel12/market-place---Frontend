@@ -93,7 +93,7 @@ function ProductDetailsPage() {
   return (
     <>
       <div className="flex items-center justify-center">
-        {isOpeningModal ? (
+        {isOpeningModal && (
           <form
             onSubmit={() => editProduct(product._id)}
             className="mt-[400px] fixed bg-slate-700 p-6 space-y-6 rounded-md flex flex-col z-50 text-center"
@@ -143,9 +143,9 @@ function ProductDetailsPage() {
               Edit <Pencil size={20} color="#fff" strokeWidth={1.5} />
             </Button>
           </form>
-        ) : null}
+        )}
       </div>
-      <MainDiv className="relative my-4 mx-4 px-5 pt-4 pb-6 shadow-2xl max-w-3xl">
+      <div className="relative my-4 mx-4 px-5 pt-4 pb-6 shadow-2xl max-w-3xl">
         <H one> {product.name}</H>
         <div className="text-left space-y-5 mt-16">
           <img src="https://via.placeholder.com/300x200" alt={product.name} />
@@ -161,7 +161,7 @@ function ProductDetailsPage() {
             </Button>
           </div>
         </div>
-      </MainDiv>
+      </div>
     </>
   );
 }

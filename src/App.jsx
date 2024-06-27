@@ -8,6 +8,7 @@ import NotFoundPage from "./components/pages/NotFoundPage";
 import Layout from "./components/pages/Layout";
 import RegisterPage from "./components/pages/RegisterPage";
 import LoginPage from "./components/pages/LoginPage";
+import { House, LogIn, ShoppingCart } from "lucide-react";
 
 function App() {
   function TopNavBar(props) {
@@ -18,7 +19,7 @@ function App() {
           return isActive ? { color: "#fff", textDecoration: "underline" } : {};
         }}
         to={href}
-        className="text-xl  hover:text-2xl transition-all"
+        className="text-xl hover:text-2xl transition-all flex justify-center items-center gap-1"
       >
         {children}
       </NavLink>
@@ -30,16 +31,29 @@ function App() {
         <h1 className="font-bold text-3xl">OK-Market</h1>
         <ul className="flex gap-7">
           <li>
-            <TopNavBar href={"/"}>Home</TopNavBar>
+            <TopNavBar href={"/"}>
+              <House size={20} className="text-inherit" strokeWidth={1.5} />{" "}
+              Home
+            </TopNavBar>
           </li>
           <li>
-            <TopNavBar href={"/products"}>Products</TopNavBar>
+            <TopNavBar href={"/products"}>
+              <ShoppingCart
+                size={20}
+                className="text-inherit"
+                strokeWidth={1.5}
+              />{" "}
+              Products
+            </TopNavBar>
           </li>
           <li>
             <TopNavBar href={"/register"}>Register</TopNavBar>
           </li>
           <li>
-            <TopNavBar href={"/login"}>Login</TopNavBar>
+            <TopNavBar href={"/login"}>
+              <LogIn size={20} className="text-inherit" strokeWidth={1.5} />{" "}
+              Login
+            </TopNavBar>
           </li>
         </ul>
       </nav>
