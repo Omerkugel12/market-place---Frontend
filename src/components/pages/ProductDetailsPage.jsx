@@ -6,17 +6,22 @@ import H from "../../UI/H";
 import Button from "../../UI/Button";
 import Paragraph from "../../UI/Paragraph";
 import { Trash2, Pencil, X } from "lucide-react";
+import Modal from "../../UI/Modal";
 
 function ProductDetailsPage() {
   const [product, setProduct] = useState(null);
   const { productId } = useParams();
   const [products, setProducts] = useOutletContext();
   const navigate = useNavigate();
-  const [isOpeningModal, setIsOpeningModal] = useState(null);
+  const [isOpeningModal, setIsOpeningModal] = useState(false);
   const updatedProductNameInputRef = useRef(null);
   const updatedProductPriceInputRef = useRef(null);
   const updatedProductQuantityInputRef = useRef(null);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [isDelete, setIsDelete] = useState(false);
+  const [errorToDelete, setErrorToDelete] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+  const [errorToEdit, setErrorToEdit] = useState(false);
 
   function handleCategoryChange(e) {
     setSelectedCategory(e.target.value);
@@ -40,10 +45,14 @@ function ProductDetailsPage() {
       setProducts((prevProducts) => {
         return prevProducts.filter((product) => product._id !== productId);
       });
-      console.log("deleting");
-      navigate("/products");
+
+      setTimeout(() => {
+        navigate("/products");
+      }, 2000);
+      setIsDelete(true);
     } catch (error) {
       console.log(error);
+      setErrorToDelete(true);
     }
   }
 
@@ -70,85 +79,94 @@ function ProductDetailsPage() {
           product._id === productId ? updatedProductPutted : product
         );
       });
+      setIsEdit(true);
     } catch (error) {
       console.log(error);
+      setErrorToEdit(true);
     }
-  }
-
-  function MainDiv(props) {
-    const { children } = props;
-    return (
-      <div
-        className={
-          isOpeningModal
-            ? "opacity-5 relative my-4 mx-4 px-5 pt-4 pb-6 shadow-2xl max-w-3xl"
-            : "relative my-4 mx-4 px-5 pt-4 pb-6 shadow-2xl max-w-3xl"
-        }
-      >
-        {children}
-      </div>
-    );
   }
 
   return (
     <>
-      <div className="flex items-center justify-center">
-        {isOpeningModal && (
-          <form
-            onSubmit={() => editProduct(product._id)}
-            className="mt-[400px] fixed bg-slate-700 p-6 space-y-6 rounded-md flex flex-col z-50 text-center"
-          >
-            <Button
-              danger
-              className="absolute bg-inherit size-1 top-0 left-0 rounded-md"
-              onClick={() => {
-                setIsOpeningModal(false);
-              }}
+      {isOpeningModal && (
+        <>
+          <div className="fixed top-0 bottom-0 right-0 left-0 bg-slate-800 opacity-60">
+            {isEdit ? (
+              <Modal success>Product edited successfully!</Modal>
+            ) : null}
+            {errorToEdit ? <Modal error>Error editing product!</Modal> : null}
+          </div>
+          <div className="flex items-center justify-center">
+            <form
+              onSubmit={() => editProduct(product._id)}
+              className="mt-[400px] fixed bg-slate-700 p-6 space-y-6 rounded-md flex flex-col z-50 text-center"
             >
-              <X color="#ff0000" strokeWidth={1.75} />
-            </Button>
-            <input
-              type="text"
-              ref={updatedProductNameInputRef}
-              placeholder="Enter product name..."
-              required
-            />
-            <input
-              type="number"
-              ref={updatedProductPriceInputRef}
-              placeholder="Enter product price..."
-              required
-            />
-            <input
-              type="number"
-              ref={updatedProductQuantityInputRef}
-              placeholder="Enter product quantity..."
-              required
-            />
-            <select
-              value={selectedCategory}
-              onChange={handleCategoryChange}
-              required
-            >
-              <option value="none">Select category</option>
-              <option value="Accessories">Accessories</option>
-              <option value="HomeAppliances">Home Appliances</option>
-              <option value="Electronics">Electronics</option>
-              <option value="SmartHome">Smart Home</option>
-              <option value="Automotive">Automotive</option>
-              <option value="Wearables">Wearables</option>
-              <option value="Health">Health</option>
-            </select>
-            <Button edit className="flex items-center justify-center gap-2">
-              Edit <Pencil size={20} color="#fff" strokeWidth={1.5} />
-            </Button>
-          </form>
-        )}
-      </div>
-      <div className="relative my-4 mx-4 px-5 pt-4 pb-6 shadow-2xl max-w-3xl">
+              <Button
+                danger
+                className="absolute bg-inherit size-1 top-0 left-0 rounded-md"
+                onClick={() => {
+                  setIsOpeningModal(false);
+                }}
+              >
+                <X color="#ff0000" strokeWidth={1.75} />
+              </Button>
+              <input
+                type="text"
+                ref={updatedProductNameInputRef}
+                placeholder="Enter product name..."
+                required
+              />
+              <input
+                type="number"
+                ref={updatedProductPriceInputRef}
+                placeholder="Enter product price..."
+                required
+              />
+              <input
+                type="number"
+                ref={updatedProductQuantityInputRef}
+                placeholder="Enter product quantity..."
+                required
+              />
+              <select
+                value={selectedCategory}
+                onChange={handleCategoryChange}
+                required
+              >
+                <option value="none">Select category</option>
+                <option value="Accessories">Accessories</option>
+                <option value="HomeAppliances">Home Appliances</option>
+                <option value="Electronics">Electronics</option>
+                <option value="SmartHome">Smart Home</option>
+                <option value="Automotive">Automotive</option>
+                <option value="Wearables">Wearables</option>
+                <option value="Health">Health</option>
+              </select>
+              <Button
+                edit
+                onClick={() =>
+                  setTimeout(() => {
+                    setIsOpeningModal(false);
+                  }, 3000)
+                }
+                className="flex items-center justify-center gap-2"
+              >
+                Edit <Pencil size={20} color="#fff" strokeWidth={1.5} />
+              </Button>
+            </form>
+          </div>
+        </>
+      )}
+      <div
+        className={` relative my-4 mx-4 px-5 pt-4 pb-6 shadow-2xl max-w-3xl`}
+      >
         <H one> {product.name}</H>
         <div className="text-left space-y-5 mt-16">
-          <img src="https://via.placeholder.com/300x200" alt={product.name} />
+          <img
+            src="https://via.placeholder.com/300x200"
+            alt={product.name}
+            className={`${isOpeningModal ? "opacity-60" : ""}`}
+          />
           <Paragraph>{product.price} $</Paragraph>
           <Paragraph>{product.category}</Paragraph>
           <Paragraph>In stock: {product.quantity}</Paragraph>
@@ -161,6 +179,8 @@ function ProductDetailsPage() {
             </Button>
           </div>
         </div>
+        {isDelete ? <Modal success>Product deleted successfully!</Modal> : null}
+        {errorToDelete ? <Modal error>Error deleting product!</Modal> : null}
       </div>
     </>
   );

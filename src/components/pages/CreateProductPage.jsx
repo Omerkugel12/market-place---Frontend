@@ -5,6 +5,8 @@ import { PRODUCT_BASE_URL } from "../../constansts/url.constant";
 import H from "../../UI/H";
 import Input from "../../UI/Input";
 import Button from "../../UI/Button";
+import { X } from "lucide-react";
+import Modal from "../../UI/Modal";
 function CreateProductPage() {
   const [products, setProducts] = useOutletContext();
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -12,6 +14,8 @@ function CreateProductPage() {
   const newProductPriceInputRef = useRef(null);
   const newProductQuantityInputRef = useRef(null);
   const navigate = useNavigate();
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   function handleCategoryChange(ev) {
     setSelectedCategory(ev.target.value);
@@ -34,15 +38,30 @@ function CreateProductPage() {
       setProducts((prevProducts) => {
         return [...prevProducts, newProductPosted];
       });
-      navigate("/products");
+      setTimeout(() => {
+        navigate("/products");
+      }, 3000);
+      setIsSuccess(true);
     } catch (error) {
       console.log(error);
+      setIsError(true);
     }
   }
 
   return (
     <>
-      <div className="flex justify-center items-center">
+      <div className="fixed top-0 bottom-0 right-0 left-0 bg-slate-700 opacity-80">
+        {isSuccess ? <Modal success>Product added successfully!</Modal> : null}
+        {isError ? <Modal error>Error adding product!</Modal> : null}
+      </div>
+      <div className="fixed flex justify-center items-center top-1/2 -translate-y-1/2 left-1/2 transform -translate-x-1/2 z-50 bg-white">
+        <Button
+          danger
+          className="absolute bg-inherit size-1 top-0 left-0 rounded-md"
+          onClick={() => navigate("/products")}
+        >
+          <X color="#ff0000" strokeWidth={1.75} />
+        </Button>
         <form
           onSubmit={addProduct}
           className="flex flex-col space-y-6 mt-6 shadow-2xl p-14"

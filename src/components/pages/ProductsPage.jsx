@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {
   Link,
+  Outlet,
   useNavigate,
   useOutletContext,
   useSearchParams,
@@ -17,10 +18,13 @@ function ProductsPage() {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [isOpeningFilter, setIsOpeningFilter] = useState(false);
+  const [totalProducts, setTotalProducts] = useState(null);
+
+  const page = Number(searchParams.get("page"));
+  const numOfPages = totalProducts ? Math.ceil(totalProducts / 6) : 0;
 
   useEffect(() => {
     async function getProducts() {
-      const page = searchParams.get("page");
       if (page < 1) searchParams.set("page", 1);
       setSearchParams(searchParams);
 
@@ -40,7 +44,16 @@ function ProductsPage() {
         console.log(error);
       }
     }
+    async function fetchProductsCount() {
+      try {
+        const res = await axios.get(`${PRODUCT_BASE_URL}/count`);
+        setTotalProducts(Number(res.data.count));
+      } catch (error) {
+        console.log(error);
+      }
+    }
     getProducts();
+    fetchProductsCount();
   }, [searchParams]);
 
   function handleFilterSubmit(event) {
@@ -57,9 +70,12 @@ function ProductsPage() {
     setSearchParams(searchParams);
   }
 
-  function handlePagination(ev) {
-    const value = ev.target.value;
-    searchParams.set("page", value);
+  function handleNextPage() {
+    searchParams.set("page", page + 1);
+    setSearchParams(searchParams);
+  }
+  function handlePrevPage() {
+    searchParams.set("page", page - 1);
     setSearchParams(searchParams);
   }
 
@@ -157,17 +173,6 @@ function ProductsPage() {
             </Button>
           </form>
         </div>
-        <div className="my-4">
-          <Input
-            className="w-12 border-gray-300 p-3"
-            min={1}
-            id="page"
-            name="page"
-            type="number"
-            value={searchParams.get("page") || "1"}
-            onChange={handlePagination}
-          />
-        </div>
         <ul className="flex flex-wrap gap-10 justify-center ">
           {products.map((product) => {
             return (
@@ -207,7 +212,22 @@ function ProductsPage() {
             );
           })}
         </ul>
+        <div className="flex gap-4 justify-center items-center flex-row-reverse p-4">
+          <Button
+            onClick={page === numOfPages ? undefined : handleNextPage}
+            className={page === numOfPages ? " opacity-50 " : ""}
+          >
+            Next
+          </Button>
+          <Button
+            onClick={page === 1 ? undefined : handlePrevPage}
+            className={page === 1 ? " opacity-50 " : ""}
+          >
+            prev
+          </Button>
+        </div>
       </div>
+      <Outlet context={[products, setProducts]} />
     </>
   );
 }
