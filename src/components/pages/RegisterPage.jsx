@@ -3,6 +3,8 @@ import H from "../../UI/H";
 import Input from "../../UI/Input";
 import Button from "../../UI/Button";
 import { Check } from "lucide-react";
+import axios from "axios";
+import { AUTH_BASE_URL } from "../../constansts/url.constant";
 
 function RegisterPage() {
   const [username, setUsername] = useState("");
@@ -10,11 +12,21 @@ function RegisterPage() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
-  function handleRegistration(ev) {
+  async function handleRegistration(ev) {
     ev.preventDefault();
     console.log(
       `registered! UserName:${username}, Password: ${password}, FirstName: ${firstName}, LastName: ${lastName}`
     );
+    try {
+      await axios.post(`${AUTH_BASE_URL}/register`, {
+        username,
+        password,
+        firstName,
+        lastName,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <div className="flex justify-center items-center p-6">
