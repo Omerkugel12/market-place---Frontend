@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import {
   Link,
@@ -12,6 +12,7 @@ import Button from "../../UI/Button.jsx";
 import H from "../../UI/H.jsx";
 import { Eye, Filter, Plus, Search, X } from "lucide-react";
 import Input from "../../UI/Input.jsx";
+import { UserContext } from "../../contexts/UserContext.jsx";
 
 function ProductsPage() {
   const [products, setProducts] = useOutletContext();
@@ -19,6 +20,7 @@ function ProductsPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isOpeningFilter, setIsOpeningFilter] = useState(false);
   const [totalProducts, setTotalProducts] = useState(null);
+  const { user } = useContext(UserContext);
 
   const page = Number(searchParams.get("page"));
   const numOfPages = totalProducts ? Math.ceil(totalProducts / 6) : 0;
@@ -151,6 +153,15 @@ function ProductsPage() {
           Filters
           <Filter size={20} color="#fff" strokeWidth={1.5} />
         </Button>
+        {/* {user ? (
+          <Button
+            view
+            className="absolute right-6 flex items-center justify-center gap-2"
+            onClick={() => navigate("create", { replace: true })}
+          >
+            Add product <Plus size={20} color="#fff" strokeWidth={1.5} />
+          </Button>
+        ) : null} */}
         <Button
           view
           className="absolute right-6 flex items-center justify-center gap-2"

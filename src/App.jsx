@@ -50,9 +50,11 @@ function App() {
               {"Products"}
             </TopNavBar>
           </li>
-          <li>
-            <TopNavBar href={"/register"}>Register</TopNavBar>
-          </li>
+          {user ? null : (
+            <li>
+              <TopNavBar href={"/register"}>Register</TopNavBar>
+            </li>
+          )}
           <li>
             {user ? (
               <Link
