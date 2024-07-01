@@ -1,19 +1,41 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useState } from "react";
 import H from "../../UI/H";
 import Input from "../../UI/Input";
 import Button from "../../UI/Button";
 import { LogIn } from "lucide-react";
+import axios from "axios";
+import { AUTH_BASE_URL } from "../../constansts/url.constant";
+import { UserContext } from "../../contexts/UserContext";
+import { useNavigate } from "react-router";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  function handleLogin(ev) {
+  const navigate = useNavigate();
+
+  async function handleLogin(ev) {
     ev.preventDefault();
-    console.log(
-      `Successfull login! UserName:${username}, Password: ${password}`
-    );
+
+    try {
+      const res = await axios.post(`${AUTH_BASE_URL}/login`, {
+        username,
+        password,
+      });
+      console.log(
+        `Successfull login! UserName:${username}, Password: ${password}`
+      );
+      console.log(res);
+      const { token } = res.data;
+      localStorage.setItem("token", token);
+      setTimeout(() => {
+        navigate("/", { replace: true });
+      }, 2000);
+    } catch (error) {
+      console.log(error);
+    }
   }
+
   return (
     <>
       <div className="flex justify-center items-center p-6">

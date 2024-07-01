@@ -14,9 +14,7 @@ function RegisterPage() {
 
   async function handleRegistration(ev) {
     ev.preventDefault();
-    console.log(
-      `registered! UserName:${username}, Password: ${password}, FirstName: ${firstName}, LastName: ${lastName}`
-    );
+
     try {
       await axios.post(`${AUTH_BASE_URL}/register`, {
         username,
@@ -24,6 +22,9 @@ function RegisterPage() {
         firstName,
         lastName,
       });
+      console.log(
+        `registered! UserName:${username}, Password: ${password}, FirstName: ${firstName}, LastName: ${lastName}`
+      );
     } catch (error) {
       console.log(error);
     }

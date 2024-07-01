@@ -1,5 +1,5 @@
-import React from "react";
-import { Route, Routes, NavLink } from "react-router-dom";
+import React, { useContext } from "react";
+import { Route, Routes, NavLink, Link } from "react-router-dom";
 import HomePage from "./components/pages/HomePage";
 import ProductsPage from "./components/pages/ProductsPage";
 import ProductDetails from "./components/pages/ProductDetailsPage";
@@ -9,8 +9,12 @@ import Layout from "./components/pages/Layout";
 import RegisterPage from "./components/pages/RegisterPage";
 import LoginPage from "./components/pages/LoginPage";
 import { House, LogIn, ShoppingCart } from "lucide-react";
+import { UserContext } from "./contexts/UserContext";
+import UserProfilePage from "./components/pages/UserProfilePage";
 
 function App() {
+  const { user, setUser } = useContext(UserContext);
+
   function TopNavBar(props) {
     const { href, children } = props;
     return (
@@ -42,18 +46,27 @@ function App() {
                 size={20}
                 className="text-inherit"
                 strokeWidth={1.5}
-              />{" "}
-              Products
+              />
+              {"Products"}
             </TopNavBar>
           </li>
           <li>
             <TopNavBar href={"/register"}>Register</TopNavBar>
           </li>
           <li>
-            <TopNavBar href={"/login"}>
-              <LogIn size={20} className="text-inherit" strokeWidth={1.5} />{" "}
-              Login
-            </TopNavBar>
+            {user ? (
+              <Link
+                to={"/user_profile"}
+                className="flex justify-center items-center size-7 rounded-3xl text-blue-50 bg-violet-800"
+              >
+                {user.firstName.charAt(0)}
+              </Link>
+            ) : (
+              <TopNavBar href={"/login"}>
+                <LogIn size={20} className="text-inherit" strokeWidth={1.5} />{" "}
+                Login
+              </TopNavBar>
+            )}
           </li>
         </ul>
       </nav>
@@ -68,6 +81,7 @@ function App() {
         </Route>
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/user_profile" element={<UserProfilePage />} />
         <Route path="/*" element={<NotFoundPage />} />
       </Routes>
     </>
