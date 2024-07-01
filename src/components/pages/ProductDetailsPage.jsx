@@ -66,7 +66,7 @@ function ProductDetailsPage() {
       name: updatedProductNameInputRef.current.value,
       price: updatedProductPriceInputRef.current.value,
       quantity: updatedProductQuantityInputRef.current.value,
-      category: selectedCategory,
+      categories: selectedCategory,
     };
     try {
       const { data: updatedProductPutted } = await axios.put(
@@ -168,7 +168,7 @@ function ProductDetailsPage() {
             className={`${isOpeningModal ? "opacity-60" : ""}`}
           />
           <Paragraph>{product.price} $</Paragraph>
-          <Paragraph>{product.category}</Paragraph>
+          <Paragraph>{product.categories.join(", ")}</Paragraph>
           <Paragraph>In stock: {product.quantity}</Paragraph>
           <div className="flex gap-6 justify-end">
             <Button deleting onClick={() => removeProduct(product._id)}>

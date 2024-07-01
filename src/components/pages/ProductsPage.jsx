@@ -191,7 +191,8 @@ function ProductsPage() {
                   </H>
                   <p className="text-gray-700">${product.price}</p>
                   <p className="text-gray-600">
-                    Category: <span className="">{product.category}</span>
+                    Category:{" "}
+                    <span className="">{product.categories.join(", ")}</span>
                   </p>
                   <p className="text-gray-600">In Stock: {product.quantity}</p>
 
