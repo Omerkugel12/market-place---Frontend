@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router";
 import { PRODUCT_BASE_URL } from "../../constansts/url.constant";
 import H from "../../UI/H";
@@ -7,6 +7,8 @@ import Input from "../../UI/Input";
 import Button from "../../UI/Button";
 import { X } from "lucide-react";
 import Modal from "../../UI/Modal";
+import { UserContext } from "../../contexts/UserContext";
+
 function CreateProductPage() {
   const [products, setProducts] = useOutletContext();
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -16,6 +18,8 @@ function CreateProductPage() {
   const navigate = useNavigate();
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setIsError] = useState(false);
+  const { user } = useContext(UserContext);
+  const { userProducts, setUserProducts } = useContext(UserContext);
 
   function handleCategoryChange(ev) {
     setSelectedCategory(ev.target.value);
@@ -26,15 +30,20 @@ function CreateProductPage() {
     const newProduct = {
       name: newProductNameInputRef.current.value,
       price: newProductPriceInputRef.current.value,
+      categories: selectedCategory,
       quantity: newProductQuantityInputRef.current.value,
-      category: selectedCategory,
+      user: user._id,
     };
     try {
       const { data: newProductPosted } = await axios.post(
         PRODUCT_BASE_URL,
         newProduct
       );
-      console.log("product added successfuly");
+      // console.log(userProducts);
+      // setUserProducts((prevUserProducts) => {
+      //   return [...prevUserProducts, newProductPosted];
+      // });
+      // console.log(userProducts);
       setProducts((prevProducts) => {
         return [...prevProducts, newProductPosted];
       });
@@ -85,7 +94,7 @@ function CreateProductPage() {
             register
             type="number"
             ref={newProductQuantityInputRef}
-            placeholder="Enter product uantity..."
+            placeholder="Enter product quantity..."
             required
           />
           <select

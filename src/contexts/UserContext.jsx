@@ -7,6 +7,7 @@ export const UserContext = createContext(null);
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState(null);
+  const [userProducts, setUserProducts] = useState([]);
   const token = localStorage.getItem("token");
 
   async function getUserById(id) {
@@ -27,7 +28,9 @@ export function UserProvider({ children }) {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider
+      value={{ user, setUser, userProducts, setUserProducts }}
+    >
       {children}
     </UserContext.Provider>
   );

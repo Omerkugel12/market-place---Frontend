@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { UserContext } from "../../contexts/UserContext";
 import H from "../../UI/H";
 import axios from "axios";
@@ -9,20 +9,17 @@ import { Eye } from "lucide-react";
 
 function ProfilePage() {
   const { user } = useContext(UserContext);
-  const [userProducts, setUserProducts] = useState([]);
+  const { userProducts, setUserProducts } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
     async function getUserProducts() {
       if (user && user.products.length > 0) {
         try {
-          const productsRequests = user.products.map(
-            (productId) => axios.get(`${PRODUCT_BASE_URL}/${productId}`)
-            // console.log(productId)
+          const productsRequests = user.products.map((productId) =>
+            axios.get(`${PRODUCT_BASE_URL}/${productId}`)
           );
-          //   console.log(productId);
           const responses = await Promise.all(productsRequests);
-          //   console.log(responses);
           const productsWithData = responses.map((response) => response.data);
           setUserProducts(productsWithData);
         } catch (error) {
