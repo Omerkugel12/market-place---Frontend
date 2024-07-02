@@ -27,6 +27,7 @@ function CreateProductPage() {
 
   async function addProduct(ev) {
     ev.preventDefault();
+    const token = localStorage.getItem("token");
     const newProduct = {
       name: newProductNameInputRef.current.value,
       price: newProductPriceInputRef.current.value,
@@ -37,7 +38,8 @@ function CreateProductPage() {
     try {
       const { data: newProductPosted } = await axios.post(
         PRODUCT_BASE_URL,
-        newProduct
+        newProduct,
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       // console.log(userProducts);
       // setUserProducts((prevUserProducts) => {
