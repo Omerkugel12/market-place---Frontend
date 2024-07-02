@@ -33,7 +33,6 @@ function CreateProductPage() {
       price: newProductPriceInputRef.current.value,
       categories: selectedCategory,
       quantity: newProductQuantityInputRef.current.value,
-      user: user._id,
     };
     try {
       const { data: newProductPosted } = await axios.post(
@@ -41,11 +40,6 @@ function CreateProductPage() {
         newProduct,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      // console.log(userProducts);
-      // setUserProducts((prevUserProducts) => {
-      //   return [...prevUserProducts, newProductPosted];
-      // });
-      // console.log(userProducts);
       setProducts((prevProducts) => {
         return [...prevProducts, newProductPosted];
       });

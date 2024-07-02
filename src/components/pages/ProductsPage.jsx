@@ -153,7 +153,7 @@ function ProductsPage() {
           Filters
           <Filter size={20} color="#fff" strokeWidth={1.5} />
         </Button>
-        {/* {user ? (
+        {user ? (
           <Button
             view
             className="absolute right-6 flex items-center justify-center gap-2"
@@ -161,14 +161,8 @@ function ProductsPage() {
           >
             Add product <Plus size={20} color="#fff" strokeWidth={1.5} />
           </Button>
-        ) : null} */}
-        <Button
-          view
-          className="absolute right-6 flex items-center justify-center gap-2"
-          onClick={() => navigate("create", { replace: true })}
-        >
-          Add product <Plus size={20} color="#fff" strokeWidth={1.5} />
-        </Button>
+        ) : null}
+
         <div className="flex items-center my-6">
           <form onSubmit={handleFilterSubmit} className="flex">
             <Input

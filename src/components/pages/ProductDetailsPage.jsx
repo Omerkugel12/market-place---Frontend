@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { useNavigate, useOutletContext, useParams } from "react-router";
 import { PRODUCT_BASE_URL } from "../../constansts/url.constant";
 import H from "../../UI/H";
@@ -7,6 +7,7 @@ import Button from "../../UI/Button";
 import Paragraph from "../../UI/Paragraph";
 import { Trash2, Pencil, X } from "lucide-react";
 import Modal from "../../UI/Modal";
+import { UserContext } from "../../contexts/UserContext";
 
 function ProductDetailsPage() {
   const [product, setProduct] = useState(null);
@@ -22,6 +23,7 @@ function ProductDetailsPage() {
   const [errorToDelete, setErrorToDelete] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [errorToEdit, setErrorToEdit] = useState(false);
+  const { user } = useContext(UserContext);
 
   function handleCategoryChange(e) {
     setSelectedCategory(e.target.value);
@@ -41,7 +43,10 @@ function ProductDetailsPage() {
 
   async function removeProduct(productId) {
     try {
-      await axios.delete(`${PRODUCT_BASE_URL}/${productId}`);
+      const token = localStorage.getItem("token");
+      await axios.delete(`${PRODUCT_BASE_URL}/${productId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setProducts((prevProducts) => {
         return prevProducts.filter((product) => product._id !== productId);
       });
@@ -170,14 +175,16 @@ function ProductDetailsPage() {
           <Paragraph>{product.price} $</Paragraph>
           <Paragraph>{product.categories.join(", ")}</Paragraph>
           <Paragraph>In stock: {product.quantity}</Paragraph>
-          <div className="flex gap-6 justify-end">
-            <Button deleting onClick={() => removeProduct(product._id)}>
-              <Trash2 size={20} color="#fff" strokeWidth={1.5} />
-            </Button>
-            <Button edit onClick={() => setIsOpeningModal(true)}>
-              <Pencil size={20} color="#fff" strokeWidth={1.5} />
-            </Button>
-          </div>
+          {user && product.user === user._id && (
+            <div className="flex gap-6 justify-end">
+              <Button deleting onClick={() => removeProduct(product._id)}>
+                <Trash2 size={20} color="#fff" strokeWidth={1.5} />
+              </Button>
+              <Button edit onClick={() => setIsOpeningModal(true)}>
+                <Pencil size={20} color="#fff" strokeWidth={1.5} />
+              </Button>
+            </div>
+          )}
         </div>
         {isDelete ? <Modal success>Product deleted successfully!</Modal> : null}
         {errorToDelete ? <Modal error>Error deleting product!</Modal> : null}
