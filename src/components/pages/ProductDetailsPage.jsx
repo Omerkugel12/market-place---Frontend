@@ -65,18 +65,22 @@ function ProductDetailsPage() {
     return;
   }
 
-  async function editProduct(productId) {
+  async function editProduct(ev, productId) {
+    ev.preventDefault();
+    const token = localStorage.getItem("token");
     const updatedProduct = {
-      _id: productId,
       name: updatedProductNameInputRef.current.value,
       price: updatedProductPriceInputRef.current.value,
-      quantity: updatedProductQuantityInputRef.current.value,
       categories: selectedCategory,
+      quantity: updatedProductQuantityInputRef.current.value,
     };
     try {
       const { data: updatedProductPutted } = await axios.put(
         `${PRODUCT_BASE_URL}/${productId}`,
-        updatedProduct
+        updatedProduct,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
       );
       setProduct(updatedProductPutted);
       setProducts((prevProducts) => {
@@ -103,7 +107,7 @@ function ProductDetailsPage() {
           </div>
           <div className="flex items-center justify-center">
             <form
-              onSubmit={() => editProduct(product._id)}
+              onSubmit={(ev) => editProduct(ev, product._id)}
               className="mt-[400px] fixed bg-slate-700 p-6 space-y-6 rounded-md flex flex-col z-50 text-center"
             >
               <Button
